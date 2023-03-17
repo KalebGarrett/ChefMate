@@ -1,4 +1,4 @@
-namespace FishWatch.API;
+namespace ChefMate.API;
 
 public class WeatherForecast
 {

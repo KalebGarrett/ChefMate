@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace FishWatch.API.Controllers;
+namespace ChefMate.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]

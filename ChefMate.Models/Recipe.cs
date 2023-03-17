@@ -1,8 +1,7 @@
 ﻿namespace ChefMate.Models;
 
-public class Recipe
+public class Recipe : BaseResource
 {
-    public string Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
