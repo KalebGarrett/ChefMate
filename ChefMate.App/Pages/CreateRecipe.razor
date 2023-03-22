@@ -1,0 +1,23 @@
+﻿@page "/CreateRecipe"
+@using ChefMate.Models
+<h1>Create Recipe</h1>
+
+<EditForm Model="@Recipe" OnSubmit="@HandleSubmit">
+    <div class="row">
+        <div class="col-md-6">
+            <InputText @bind-Value="@Recipe.Name"/>
+        </div>
+        <div class="col-12">
+            <InputTextArea @bind-Value="@Recipe.Description"/>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    public Recipe Recipe { get; set; } = new Recipe();
+
+    private async Task HandleSubmit()
+    {
+    }
+
+}
