@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using ChefMate.Models;
 
 namespace ChefMate.App.Services;
@@ -26,4 +27,15 @@ public class RecipeService
 
         return new List<Recipe>();
     }
-}
+
+    public async Task<Recipe> Create(Recipe recipe)
+    {
+        var json = JsonSerializer.Serialize(recipe);
+        var result = await _httpClient.PostAsync("recipes", new StringContent(json, Encoding.UTF8, "application/json"));
+        if (!result.IsSuccessStatusCode)
+        {
+            return null;
+        }
+        return recipe;
+    }
+ }

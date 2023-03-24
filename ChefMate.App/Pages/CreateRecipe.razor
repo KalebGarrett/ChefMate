@@ -1,23 +1,39 @@
 ﻿@page "/CreateRecipe"
 @using ChefMate.Models
+@using ChefMate.App.Services
 <h1>Create Recipe</h1>
 
 <EditForm Model="@Recipe" OnSubmit="@HandleSubmit">
     <div class="row">
         <div class="col-md-6">
-            <InputText @bind-Value="@Recipe.Name"/>
+            <label>Name</label><br/>
+            <InputText @bind-Value="@Recipe.Name" class="form-control"/>
         </div>
         <div class="col-12">
-            <InputTextArea @bind-Value="@Recipe.Description"/>
+            <label>Description</label><br/>
+            <InputTextArea @bind-Value="@Recipe.Description" class="form-control"/>
         </div>
+        <div class="col-md-6">
+            <label>Prep Time</label><br/>
+            <InputNumber @bind-Value="@Recipe.PrepTime" class="form-control"/>
+        </div>
+        <div class="col-md-6">
+            <label>Cook Time</label><br/>
+            <InputNumber @bind-Value="@Recipe.CookTime" class="form-control"/>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-success">Create New</button>
     </div>
 </EditForm>
 
 @code {
+    [Inject]
+    public RecipeService RecipeService { get; set; }
+    
     public Recipe Recipe { get; set; } = new Recipe();
 
     private async Task HandleSubmit()
     {
+        await RecipeService.Create(Recipe);
     }
-
 }
