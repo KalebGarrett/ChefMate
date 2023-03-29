@@ -1,0 +1,74 @@
+﻿<EditForm Model="@Recipe" OnSubmit="@HandleSubmit">
+    <h2>General</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Name</label><br/>
+            <InputText @bind-Value="@Recipe.Name" class="form-control"/>
+        </div>
+        <div class="col-12">
+            <label>Description</label><br/>
+            <InputTextArea @bind-Value="@Recipe.Description" class="form-control"/>
+        </div>
+        <div class="col-md-6">
+            <label>Prep Time</label><br/>
+            <InputNumber @bind-Value="@Recipe.PrepTime" class="form-control"/>
+        </div>
+        <div class="col-md-6">
+            <label>Cook Time</label><br/>
+            <InputNumber @bind-Value="@Recipe.CookTime" class="form-control"/>
+        </div>
+    </div>
+    <hr/>
+    <h2>Ingredients</h2>
+    @for (var i = 0; i < Recipe.Ingredients.Count; i++)
+    {
+        var ingredient = Recipe.Ingredients[i];
+        <div class="row">
+            <div class="col-md-6">
+                <label>Name</label><br/>
+                <InputText @bind-Value="@ingredient.Name" class="form-control"/>
+            </div>
+            <div class="col-md-3">
+                <label>Amount</label><br/>
+                <InputNumber @bind-Value="@ingredient.Amount" class="form-control"/>
+            </div>
+            <div class="col-md-2">
+                <label>Unit</label><br/>
+                <InputText @bind-Value="@ingredient.Unit" class="form-control"/>
+            </div>
+            <div class="col-md-1">
+                <br/>
+                <button class="btn btn-danger" @onclick="@(() => DeleteIngredient(ingredient))">
+                    <span class="oi oi-trash" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+        <hr/>
+    }
+    <br/>
+    <button class="btn btn-primary" @onclick="AddIngredient">Add Ingredient</button>
+    <hr/>
+    <h2>Steps</h2>
+    @for (var i = 0; i < Recipe.Steps.Count; i++)
+    {
+        var step = Recipe.Steps[i];
+        <h3>Step @(i + 1)</h3>
+        <div class="row">
+            <div class="col-md-11">
+                <label>Description</label><br/>
+                <InputTextArea @bind-Value="@step.Description" class="form-control"/>
+            </div>
+            <div class="col-md-1">
+                <br/>
+                <button class="btn btn-danger" @onclick="@(() => DeleteStep(step))">
+                    <span class="oi oi-trash" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+        <hr/>
+    }
+    <br/>
+    <button class="btn btn-primary" @onclick="AddStep">Add Step</button>
+    <hr/>
+    <button type="submit" class="btn btn-success" disabled="@IsSubmitting">Save</button>
+</EditForm>

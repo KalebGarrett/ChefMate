@@ -8,10 +8,10 @@ public class Recipe : BaseResource
     public string Description { get; set; }
     public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     public List<RecipeStep> Steps { get; set; } = new List<RecipeStep>();
-    public int PrepTime { get; set; } 
-    public int CookTime { get; set; }
+    public double PrepTime { get; set; } 
+    public double CookTime { get; set; }
     [JsonIgnore]
-    public int TotalTime => PrepTime + CookTime;
+    public double TotalTime => PrepTime + CookTime;
 }
 
 public class Ingredient

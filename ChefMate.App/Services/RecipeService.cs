@@ -27,6 +27,21 @@ public class RecipeService
 
         return new List<Recipe>();
     }
+    
+    public async Task<Recipe> Get(string id)
+    {
+        var result = await _httpClient.GetAsync($"recipes/{id}");
+        if (result.IsSuccessStatusCode)
+        {
+            var json = await result.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Recipe>(json, new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            });
+        }
+
+        return null;
+    }
 
     public async Task<Recipe> Create(Recipe recipe)
     {
@@ -37,5 +52,22 @@ public class RecipeService
             return null;
         }
         return recipe;
+    }
+    
+    public async Task<Recipe> Update(string id, Recipe recipe)
+    {
+        var json = JsonSerializer.Serialize(recipe);
+        var result = await _httpClient.PutAsync($"recipes/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+        if (!result.IsSuccessStatusCode)
+        {
+            return null;
+        }
+        return recipe;
+    }
+
+    public async Task<bool> Delete(string id)
+    {
+        var result = await _httpClient.DeleteAsync($"recipes/{id}");
+        return result.IsSuccessStatusCode;
     }
  }

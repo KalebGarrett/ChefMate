@@ -6,41 +6,21 @@ namespace ChefMate.App.Pages;
 
 public partial class CreateRecipe : ComponentBase
 {
-    [Inject]
+    [Inject] 
     public RecipeService RecipeService { get; set; }
-    
-    [Inject]
+ 
+    [Inject] 
     public NavigationManager NavigationManager { get; set; }
     
     public Recipe Recipe { get; set; } = new Recipe();
 
-    private bool IsSubmitting { get; set; }
-    
-    private async Task HandleSubmit()
+    public async Task OnSubmit()
     {
-        IsSubmitting = true;
         await RecipeService.Create(Recipe);
-        IsSubmitting = false;
+    }
+
+    public async Task OnSubmitComplete()
+    {
         NavigationManager.NavigateTo("/");
-    }
-
-    private void AddIngredient()
-    {
-        Recipe.Ingredients.Add(new Ingredient());
-    }
-
-    private void DeleteIngredient(Ingredient ingredient)
-    {
-        Recipe.Ingredients.Remove(ingredient);
-    }
-
-    private void AddStep()
-    {
-        Recipe.Steps.Add(new RecipeStep());
-    }
-    
-    private void DeleteStep(RecipeStep step)
-    {
-        Recipe.Steps.Remove(step);
     }
 }

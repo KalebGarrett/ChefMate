@@ -18,6 +18,12 @@
             <td>@recipe.Id</td>
             <td>@recipe.Name</td>
             <td>@recipe.CreatedAt</td>
+            <td>
+                <a href="/editRecipe/@recipe.Id" class="btn btn-primary">Edit</a>
+            </td>
+            <td>
+                <button class="btn-danger" @onclick="@((() => DeleteRecipe(recipe)))">Delete</button>
+            </td>
         </tr>   
     }
 </table>
@@ -33,6 +39,13 @@
         await base.OnInitializedAsync();
         Recipes = await RecipeService.GetAll();
     }
-    
-    
+
+    private async Task DeleteRecipe(Recipe recipe)
+    {
+        var deleted = await RecipeService.Delete(recipe.Id);
+        if (deleted)
+        {
+            Recipes.Remove(recipe);
+        }
+    }
 }
